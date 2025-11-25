@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AR met Externe 3D Modellen</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  </head>
+  <body style="margin: 0; overflow: hidden">
+    <a-scene
+      embedded
+      arjs="sourceType: webcam; debugUIEnabled: false;"
+      vr-mode-ui="enabled: false"
+    >
+      <!-- Preload 3D modellen (optioneel, voor betere performance) -->
+      <a-assets>
+        <!-- Voorbeeld: vrij beschikbaar 3D model van een eend -->
+        <a-asset-item
+          id="duck"
+          src="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Duck/glTF/Duck.gltf"
+        >
+        </a-asset-item>
+      </a-assets>
+
+      <!-- HIRO MARKER: Extern 3D model -->
+      <a-marker preset="hiro">
+        <!-- GLTF model laden -->
+        <a-entity
+          gltf-model="#duck"
+          position="0 0.5 0"
+          scale="0.3 0.3 0.3"
+          rotation="0 0 0"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 5000"
+        >
+        </a-entity>
+
+        <a-text
+          value="3D Model: Duck"
+          position="-0.5 1.5 0"
+          scale="0.5 0.5 0.5"
+          color="#4A90E2"
+        >
+        </a-text>
+      </a-marker>
+
+      <!-- BARCODE 1: Ander 3D model (inline geladen) -->
+      <a-marker type="barcode" value="1">
+        <!-- Direct URL gebruiken (zonder preload) -->
+        <a-entity
+          gltf-model="https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/Avocado/glTF/Avocado.gltf"
+          position="0 0.3 0"
+          scale="8 8 8"
+          animation="property: rotation; to: 0 360 0; loop: true; dur: 8000"
+        >
+        </a-entity>
+
+        <a-text
+          value="3D Model: Avocado"
+          position="-0.7 1.2 0"
+          scale="0.5 0.5 0.5"
+          color="#85C88A"
+        >
+        </a-text>
+      </a-marker>
+
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <!-- Info paneel -->
+    <div
+      style="
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        font-family: Arial;
+        max-width: 350px;
+      "
+    >
+      <h3 style="margin: 0 0 10px 0">🦆 3D Modellen Laden</h3>
+      <p style="margin: 5px 0; font-size: 14px">
+        <strong>Hiro marker:</strong> Eend (preloaded)<br />
+        <strong>Barcode 1:</strong> Avocado (direct)
+      </p>
+      <hr style="border-color: #444; margin: 10px 0" />
+      <p style="margin: 5px 0; font-size: 12px">
+        <strong>Gratis 3D modellen:</strong><br />
+        •
+        <a href="https://sketchfab.com/features/gltf" style="color: #4a90e2"
+          >Sketchfab</a
+        >
+        (zoek op "gltf")<br />
+        • <a href="https://poly.pizza" style="color: #4a90e2">Poly Pizza</a
+        ><br />
+        •
+        <a
+          href="https://github.com/KhronosGroup/glTF-Sample-Models"
+          style="color: #4a90e2"
+          >glTF Samples</a
+        >
+      </p>
+      <p style="margin: 10px 0 5px 0; font-size: 12px; color: #ccc">
+        <strong>Eigen model gebruiken:</strong><br />
+        1. Maak in Blender (.blend → export als .gltf)<br />
+        2. Upload naar je server<br />
+        3. Gebruik: gltf-model="url/naar/model.gltf"
+      </p>
+    </div>
+
+    <!-- Download markers instructie -->
+    <div
+      style="
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        z-index: 999;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: Arial;
+      "
+    >
+      <p style="margin: 0; font-size: 12px">
+        📥 Download markers:<br />
+        <strong>Hiro:</strong>
+        <a
+          href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/hiro.png"
+          style="color: #4a90e2"
+          download
+          >Klik hier</a
+        ><br />
+        <strong>Barcode 1:</strong>
+        <a
+          href="https://raw.githubusercontent.com/AR-js-org/AR.js/master/data/images/markers/barcode/pattern-barcode-1.png"
+          style="color: #4a90e2"
+          download
+          >Klik hier</a
+        >
+      </p>
+    </div>
+  </body>
+</html>
